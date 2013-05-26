@@ -25,16 +25,14 @@ extern "C" {
     
     #define GetCallbackStruct(obj)	(Check_Type(obj, T_DATA), (RCallback*)DATA_PTR(obj))
     
-    static VALUE hola_bonjour(VALUE self) {
-        return rb_str_new2("bonjour!");
-    }
-
+    #define hash_struct align_hash_map<VALUE, VALUE>
+    
     typedef struct {
-        align_hash_map<VALUE, VALUE> *hash_map;
+        hash_struct *hash_map;
     } RCallback;
     
     static void mark_hash_map_values(RCallback *incoming) {
-            for(align_hash_map<VALUE, VALUE>::iterator it = incoming->hash_map->begin(); it != incoming->hash_map->end(); ++it) {
+            for(hash_struct::iterator it = incoming->hash_map->begin(); it != incoming->hash_map->end(); ++it) {
                 rb_gc_mark(it.key());
                 rb_gc_mark(it.value());
             }
@@ -51,24 +49,26 @@ extern "C" {
         
         VALUE current_instance = Data_Make_Struct(klass, RCallback, mark_hash_map_values, free_hash_callback, cbs);
         
-        cbs->hash_map = new align_hash_map<VALUE, VALUE>();
-        cbs->hash_map->insert(0, 0);
+        cbs->hash_map = new hash_struct();
         
         return current_instance;
     }
     
     static VALUE rb_ah_hash_set(VALUE cb, VALUE set_this, VALUE to_this) {
-        RCallback* cbs = (Check_Type(cb, T_DATA), (RCallback*)DATA_PTR(cb));
+        RCallback* cbs = GetCallbackStruct(cb);
+        cbs->hash_map->insert(set_this, to_this, true);
 
-//        insert(const _Key &key, const _Val &val, bool replace = false)
-        printf("size: %llu", (unsigned long long)cbs->hash_map->size());
-        
-        
-        return set_this;
+        return to_this;
     }
     
     static VALUE rb_ah_hash_get_value(VALUE cb, VALUE get_this) {
-        return rb_str_new2("bonjour!");
+        RCallback* cbs = GetCallbackStruct(cb);
+        return cbs->hash_map->find(get_this).value();
+    }
+    
+    static VALUE rb_ah_hash_size(VALUE cb) {
+        RCallback* cbs = GetCallbackStruct(cb);
+        return INT2FIX(cbs->hash_map->size());
     }
     
     void
@@ -78,8 +78,8 @@ extern "C" {
         rb_define_alloc_func(klass, callback_alloc);
         rb_define_method(klass, "[]=", RUBY_METHOD_FUNC(rb_ah_hash_set), 2);
         rb_define_method(klass, "[]", RUBY_METHOD_FUNC(rb_ah_hash_get_value), 1);
-
-        rb_define_singleton_method(klass, "hello", (VALUE (*) (ANYARGS)) hola_bonjour, 0);
+        rb_define_method(klass, "size", RUBY_METHOD_FUNC(rb_ah_hash_size), 0);
+        rb_define_method(klass, "length", RUBY_METHOD_FUNC(rb_ah_hash_size), 0);
     }
 }
 //struct str {
