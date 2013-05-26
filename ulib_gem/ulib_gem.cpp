@@ -12,16 +12,24 @@ extern "C" {
     
     #define GetCallbackStruct(obj)	(Check_Type(obj, T_DATA), (RCallback*)DATA_PTR(obj))
     
-    #define hash_struct align_hash_map<uint32_t, VALUE>
+    #define hash_key_struct uint64_t
+    #define hash_struct align_hash_map<hash_key_struct, VALUE*>
 
     typedef struct {
         hash_struct *hash_map;
     } RCallback;
-    
+
+    hash_key_struct
+    key_hash(VALUE *value) {
+        hash_key_struct result;
+        MurmurHash3_x86_32(RSTRING_PTR(&value), RSTRING_LEN(&value), 0123, &result);
+        return result;
+    }
+
     static void mark_hash_map_values(RCallback *incoming) {
             for(hash_struct::iterator it = incoming->hash_map->begin(); it != incoming->hash_map->end(); ++it) {
                 rb_gc_mark(it.key());
-                rb_gc_mark(it.value());
+                rb_gc_mark(*it.value());
             }
     }
 
@@ -35,26 +43,31 @@ extern "C" {
         RCallback* cbs;
         
         VALUE current_instance = Data_Make_Struct(klass, RCallback, mark_hash_map_values, free_hash_callback, cbs);
-        
+
         cbs->hash_map = new hash_struct();
         
+//        align_hash_map<uint32_t, VALUE>* cbs2;
+//        cbs2 = new align_hash_map<uint32_t, VALUE>();
+//        for(uint32_t i = 0;i < 100000000;i++) {
+//            cbs2->insert(i, rb_str_new2("awdawdawd"));
+//        }
+//        printf("!!!!!!!!!!!!!!!!!!!!!\n");
+
         return current_instance;
     }
-    
-    uint32_t
-    key_hash(VALUE value) {
-        uint32_t result;
         
-        MurmurHash3_x86_32(RSTRING_PTR(value), RSTRING_LEN(value), 0123, &result);
-        
-        return result;
-    }
-    
     static VALUE rb_ah_hash_set(VALUE cb, VALUE set_this, VALUE to_this) {
         RCallback* cbs = GetCallbackStruct(cb);
         
 //        printf("set_this: %s => %u\n", StringValuePtr(set_this), key_hash(set_this));
-        cbs->hash_map->insert(key_hash(set_this), to_this, true);
+
+//        for(int i=0;i < 150000000;i++) {
+//            cbs->hash_map->insert(key_hash(rb_str_new2("awdad")), &to_this, true);
+//        }
+//        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        cbs->hash_map->insert(key_hash(&set_this), &to_this, true); // TODO: key_hash(set_this) buggy
+//        cbs->hash_map->insert(set_this, &to_this, true);
 
         return to_this;
     }
@@ -63,8 +76,14 @@ extern "C" {
         RCallback* cbs = GetCallbackStruct(cb);
         
 //        printf("get_this: %s => %u\n", StringValuePtr(get_this), key_hash(get_this));
-        
-        return cbs->hash_map->find(key_hash(get_this)).value();
+
+        uint32_t hash = key_hash(&get_this);
+
+        if (cbs->hash_map->contain(hash)) {
+            return *cbs->hash_map->find(hash).value();
+        } else {
+            return Qnil;
+        }
     }
     
     static VALUE rb_ah_hash_size(VALUE cb) {

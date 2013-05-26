@@ -1,10 +1,28 @@
 require './align_hash_with_murmur'
+require 'benchmark'
+require 'hitimes'
+require 'sane'
 require 'ap'
 
-hash = AlignHashWithMurmur.new
-ap hash['wowowowo'] = "вау вау"
-ap hash['wowowowo1'] = "wow"
+def measure
+  Hitimes::Interval.measure { yield }
+end
 
-ap "hash['wowowowo']: #{hash['wowowowo']}"
-ap "hash['none']: #{hash['none']}"
-ap "hash.size: #{hash.size}"
+def meas string
+  time_took = measure { yield }
+  puts "% -23s %.03f" % [string, time_took]
+end
+
+n = 15_000_000
+
+[AlignHashWithMurmur, Hash].each do |klass|
+  3.times do
+    GC.start
+    meas("benchmark #{klass}") do
+      hash = klass.new
+      n.times do |i|
+        hash[i.to_s] = i
+      end
+    end
+  end
+end
