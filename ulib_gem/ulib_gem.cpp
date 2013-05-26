@@ -12,7 +12,7 @@ extern "C" {
     
     #define GetCallbackStruct(obj)	(Check_Type(obj, T_DATA), (RCallback*)DATA_PTR(obj))
     
-    #define hash_key_struct uint64_t
+    #define hash_key_struct uint32_t
     #define hash_struct align_hash_map<hash_key_struct, VALUE*>
 
     typedef struct {

@@ -21,6 +21,7 @@ n = 15_000_000
     meas("benchmark #{klass}") do
       hash = klass.new
       n.times do |i|
+        puts "i: #{i}"
         hash[i.to_s] = i
       end
     end
