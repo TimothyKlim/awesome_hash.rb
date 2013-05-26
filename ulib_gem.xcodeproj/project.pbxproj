@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		766BFF3317526057007E2DDD /* hash_func.c in Sources */ = {isa = PBXBuildFile; fileRef = 766BFF2D17526057007E2DDD /* hash_func.c */; };
 		766BFF37175261B8007E2DDD /* MurmurHash3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 766BFF35175261B8007E2DDD /* MurmurHash3.cpp */; };
-		7675F34217525D2900651478 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7675F34117525D2900651478 /* main.cpp */; };
+		7675F34217525D2900651478 /* ulib_gem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7675F34117525D2900651478 /* ulib_gem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,7 +36,7 @@
 		766BFF35175261B8007E2DDD /* MurmurHash3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MurmurHash3.cpp; sourceTree = "<group>"; };
 		766BFF36175261B8007E2DDD /* MurmurHash3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MurmurHash3.h; sourceTree = "<group>"; };
 		7675F33E17525D2900651478 /* ulib_gem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ulib_gem; sourceTree = BUILT_PRODUCTS_DIR; };
-		7675F34117525D2900651478 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7675F34117525D2900651478 /* ulib_gem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ulib_gem.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +95,7 @@
 			children = (
 				766BFF34175261B8007E2DDD /* murmur */,
 				766BFF2A17526057007E2DDD /* ulib */,
-				7675F34117525D2900651478 /* main.cpp */,
+				7675F34117525D2900651478 /* ulib_gem.cpp */,
 			);
 			path = ulib_gem;
 			sourceTree = "<group>";
@@ -151,7 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7675F34217525D2900651478 /* main.cpp in Sources */,
+				7675F34217525D2900651478 /* ulib_gem.cpp in Sources */,
 				766BFF3317526057007E2DDD /* hash_func.c in Sources */,
 				766BFF37175261B8007E2DDD /* MurmurHash3.cpp in Sources */,
 			);
