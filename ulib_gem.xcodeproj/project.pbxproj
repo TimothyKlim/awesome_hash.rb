@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		766BFF3317526057007E2DDD /* hash_func.c in Sources */ = {isa = PBXBuildFile; fileRef = 766BFF2D17526057007E2DDD /* hash_func.c */; };
+		766BFF37175261B8007E2DDD /* MurmurHash3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 766BFF35175261B8007E2DDD /* MurmurHash3.cpp */; };
 		7675F34217525D2900651478 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7675F34117525D2900651478 /* main.cpp */; };
-		7675F34417525D2900651478 /* ulib_gem.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7675F34317525D2900651478 /* ulib_gem.1 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -18,16 +19,24 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				7675F34417525D2900651478 /* ulib_gem.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		766BFF2B17526057007E2DDD /* hash_align.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_align.h; sourceTree = "<group>"; };
+		766BFF2C17526057007E2DDD /* hash_align_prot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_align_prot.h; sourceTree = "<group>"; };
+		766BFF2D17526057007E2DDD /* hash_func.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hash_func.c; sourceTree = "<group>"; };
+		766BFF2E17526057007E2DDD /* hash_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_func.h; sourceTree = "<group>"; };
+		766BFF2F17526057007E2DDD /* math_bit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_bit.h; sourceTree = "<group>"; };
+		766BFF3017526057007E2DDD /* math_rand_prot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_rand_prot.h; sourceTree = "<group>"; };
+		766BFF3117526057007E2DDD /* util_algo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util_algo.h; sourceTree = "<group>"; };
+		766BFF3217526057007E2DDD /* util_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util_class.h; sourceTree = "<group>"; };
+		766BFF35175261B8007E2DDD /* MurmurHash3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MurmurHash3.cpp; sourceTree = "<group>"; };
+		766BFF36175261B8007E2DDD /* MurmurHash3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MurmurHash3.h; sourceTree = "<group>"; };
 		7675F33E17525D2900651478 /* ulib_gem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ulib_gem; sourceTree = BUILT_PRODUCTS_DIR; };
 		7675F34117525D2900651478 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		7675F34317525D2900651478 /* ulib_gem.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ulib_gem.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +50,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		766BFF2A17526057007E2DDD /* ulib */ = {
+			isa = PBXGroup;
+			children = (
+				766BFF2B17526057007E2DDD /* hash_align.h */,
+				766BFF2C17526057007E2DDD /* hash_align_prot.h */,
+				766BFF2D17526057007E2DDD /* hash_func.c */,
+				766BFF2E17526057007E2DDD /* hash_func.h */,
+				766BFF2F17526057007E2DDD /* math_bit.h */,
+				766BFF3017526057007E2DDD /* math_rand_prot.h */,
+				766BFF3117526057007E2DDD /* util_algo.h */,
+				766BFF3217526057007E2DDD /* util_class.h */,
+			);
+			path = ulib;
+			sourceTree = "<group>";
+		};
+		766BFF34175261B8007E2DDD /* murmur */ = {
+			isa = PBXGroup;
+			children = (
+				766BFF35175261B8007E2DDD /* MurmurHash3.cpp */,
+				766BFF36175261B8007E2DDD /* MurmurHash3.h */,
+			);
+			path = murmur;
+			sourceTree = "<group>";
+		};
 		7675F33517525D2900651478 = {
 			isa = PBXGroup;
 			children = (
@@ -60,8 +93,9 @@
 		7675F34017525D2900651478 /* ulib_gem */ = {
 			isa = PBXGroup;
 			children = (
+				766BFF34175261B8007E2DDD /* murmur */,
+				766BFF2A17526057007E2DDD /* ulib */,
 				7675F34117525D2900651478 /* main.cpp */,
-				7675F34317525D2900651478 /* ulib_gem.1 */,
 			);
 			path = ulib_gem;
 			sourceTree = "<group>";
@@ -118,6 +152,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7675F34217525D2900651478 /* main.cpp in Sources */,
+				766BFF3317526057007E2DDD /* hash_func.c in Sources */,
+				766BFF37175261B8007E2DDD /* MurmurHash3.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +163,7 @@
 		7675F34517525D2900651478 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -151,6 +187,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ruby-2.0.0-p195/include\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -160,7 +197,7 @@
 		7675F34617525D2900651478 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -178,6 +215,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../ruby-2.0.0-p195/include\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
@@ -216,6 +254,7 @@
 				7675F34917525D2900651478 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
