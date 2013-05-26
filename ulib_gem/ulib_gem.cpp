@@ -58,7 +58,7 @@ extern "C" {
     }
     
     static VALUE rb_ah_hash_set(VALUE cb, VALUE set_this, VALUE to_this) {
-        RCallback* cbs = GetCallbackStruct(cb);
+        RCallback* cbs = (Check_Type(cb, T_DATA), (RCallback*)DATA_PTR(cb));
 
 //        insert(const _Key &key, const _Val &val, bool replace = false)
         printf("size: %llu", (unsigned long long)cbs->hash_map->size());
