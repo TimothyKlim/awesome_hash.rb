@@ -1,21 +1,8 @@
-//
-//  main.cpp
-//  ulib_gem
-//
-//  Created by Timothy Klim on 5/26/13.
-//  Copyright (c) 2013 Timothy Klim. All rights reserved.
-//
-
-//#include <time.h>
-//#include <stdio.h>
-//#include <assert.h>
-//#include <string.h>
-
 #include "ulib/hash_func.h"
 #include "ulib/hash_align.h"
 #include "ulib/math_rand_prot.h"
 
-//#include "murmur/MurmurHash3.h"
+#include "murmur/MurmurHash3.cpp"
 
 using namespace ulib;
 
@@ -25,8 +12,8 @@ extern "C" {
     
     #define GetCallbackStruct(obj)	(Check_Type(obj, T_DATA), (RCallback*)DATA_PTR(obj))
     
-    #define hash_struct align_hash_map<VALUE, VALUE>
-    
+    #define hash_struct align_hash_map<uint32_t, VALUE>
+
     typedef struct {
         hash_struct *hash_map;
     } RCallback;
@@ -54,16 +41,30 @@ extern "C" {
         return current_instance;
     }
     
+    uint32_t
+    key_hash(VALUE value) {
+        uint32_t result;
+        
+        MurmurHash3_x86_32(RSTRING_PTR(value), RSTRING_LEN(value), 0123, &result);
+        
+        return result;
+    }
+    
     static VALUE rb_ah_hash_set(VALUE cb, VALUE set_this, VALUE to_this) {
         RCallback* cbs = GetCallbackStruct(cb);
-        cbs->hash_map->insert(set_this, to_this, true);
+        
+//        printf("set_this: %s => %u\n", StringValuePtr(set_this), key_hash(set_this));
+        cbs->hash_map->insert(key_hash(set_this), to_this, true);
 
         return to_this;
     }
     
     static VALUE rb_ah_hash_get_value(VALUE cb, VALUE get_this) {
         RCallback* cbs = GetCallbackStruct(cb);
-        return cbs->hash_map->find(get_this).value();
+        
+//        printf("get_this: %s => %u\n", StringValuePtr(get_this), key_hash(get_this));
+        
+        return cbs->hash_map->find(key_hash(get_this)).value();
     }
     
     static VALUE rb_ah_hash_size(VALUE cb) {
