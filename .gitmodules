@@ -1,0 +1,6 @@
+[submodule "src/smhasher"]
+	path = src/smhasher
+	url = git@github.com:TimothyKlim/smhasher.git
+[submodule "src/ulib"]
+	path = src/ulib
+	url = git@github.com:TimothyKlim/ulib.git
